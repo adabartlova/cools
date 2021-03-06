@@ -19,9 +19,9 @@ public class Main {
         public void paint(Graphics g)
             {
                 g.drawImage(bi, 915, 720,this);
-                //g.drawImage(bi2, 1330, 720,this);
-                //g.drawImage(bi3,950,675,this);
-            paint(g);
+                g.drawImage(bi2, 1330, 720,this);
+                g.drawImage(bi3,950,675,this);
+
             }
         };
 
@@ -32,18 +32,19 @@ public class Main {
      Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
      Rectangle rectangle3 = new Rectangle(950,1255,250,45);
 
-     bi = robot.createScreenCapture(rectangle1);
-     bi2 = robot.createScreenCapture(rectangle2);
-     bi3 = robot.createScreenCapture(rectangle3);
+     for (;;) {
+         bi = robot.createScreenCapture(rectangle1);
+         bi2 = robot.createScreenCapture(rectangle2);
+         bi3 = robot.createScreenCapture(rectangle3);
 
-     w.setAlwaysOnTop(true);
-     w.setBounds(w.getGraphicsConfiguration().getBounds());
-     w.setBackground(new Color(0, true));
-     w.setVisible(true);
+         w.setAlwaysOnTop(true);
+         w.setBounds(w.getGraphicsConfiguration().getBounds());
+         w.setBackground(new Color(0, true));
+         w.setVisible(true);
 
-     TimeUnit.MILLISECONDS.sleep(200);
+         TimeUnit.MILLISECONDS.sleep(200);
 
-
+     }
  }
 
 }
