@@ -42,7 +42,7 @@ public class Main {
          w.setBackground(new Color(0, true));
          w.setVisible(true);
 
-         TimeUnit.MILLISECONDS.sleep(200);
+         //TimeUnit.MILLISECONDS.sleep(200);
 
      }
  }
