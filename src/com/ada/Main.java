@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
@@ -35,6 +37,30 @@ public class Main {
 
             }
         };
+
+    private static void drawCooldowns() {
+
+        Robot robot = null;
+        try {
+            robot = new Robot();
+        } catch (AWTException awtException) {
+            awtException.printStackTrace();
+        }
+        Rectangle rectangle1 = new Rectangle(915,1300,305,70);
+        Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
+        Rectangle rectangle3 = new Rectangle(950,1255,250,45);
+
+        bi = robot.createScreenCapture(rectangle1);
+        bi2 = robot.createScreenCapture(rectangle2);
+        bi3 = robot.createScreenCapture(rectangle3);
+
+        w.setAlwaysOnTop(true);
+        w.setBounds(w.getGraphicsConfiguration().getBounds());
+        w.setBackground(new Color(0, true));
+        w.setVisible(true);
+        w.setFocusable(false);
+
+    }
 
  public static void main(String[] args) throws AWTException, InterruptedException {
 
@@ -122,10 +148,15 @@ public class Main {
          }
      };
 
+
+
+     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+     executorService.scheduleAtFixedRate(Main::drawCooldowns, 0, 100, TimeUnit.MILLISECONDS);
+/*
      int delay = 100;
      Timer timer = new Timer(delay,drawlistener);
      timer.start();
-
+*/
 
      if (IsRunning==true) {
 
@@ -133,7 +164,7 @@ public class Main {
 
          w.dispose();
          w.setVisible(false);
-         timer.stop();
+         //timer.stop();
 
 
      }
