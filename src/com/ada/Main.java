@@ -31,7 +31,7 @@ public class Main {
             {
                     Graphics2D g2 = (Graphics2D) g;
                     float opacity = 0.4f;
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+                    //g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
                     g2.drawImage(bi, 915, 500, this);
                     g2.drawImage(bi2, 1330, 500, this);
                     g2.drawImage(bi3, 950, 455, this);
