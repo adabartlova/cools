@@ -132,7 +132,8 @@ public class Main {
              float f = Float.parseFloat(dateString);
              //System.out.println(i);
 
-             if ( ((f/500) == Math.round(f/500)) && (IsRunning) ) {
+             //if ( ((f/500) == Math.round(f/500)) && (IsRunning) ) {
+             if (IsRunning) {
 
                  //System.out.println(f/100);
                  //drawCooldowns();
@@ -146,6 +147,8 @@ public class Main {
                  w.setBackground(new Color(0, true));
                  w.setVisible(true);
                  w.setFocusable(false);
+
+                 Thread.sleep(500);
 
              } else {
              }
