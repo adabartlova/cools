@@ -25,11 +25,11 @@ public class Main {
                 if (IsRunning) {
 
                     Graphics2D g2 = (Graphics2D) g;
-                    float opacity = 0.55f;
+                    float opacity = 0.4f;
                     g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-                    g2.drawImage(bi, 915, 750, this);
-                    g2.drawImage(bi2, 1330, 750, this);
-                    g2.drawImage(bi3, 950, 705, this);
+                    g2.drawImage(bi, 915, 500, this);
+                    g2.drawImage(bi2, 1330, 500, this);
+                    g2.drawImage(bi3, 950, 455, this);
 
                 }
 
@@ -40,12 +40,12 @@ public class Main {
 
      IsRunning = true;
 
-     TrayIcon trayIcon = null;
      if (SystemTray.isSupported()) {
          // get the SystemTray instance
          SystemTray tray = SystemTray.getSystemTray();
          // load an image
          Image image = Toolkit.getDefaultToolkit().getImage("src/icon.gif");
+
          // create a action listener to listen for default action executed on the tray icon
          ActionListener stoplistener = new ActionListener() {
              public void actionPerformed(ActionEvent e) {
@@ -79,11 +79,13 @@ public class Main {
          popup.add(startItem);
          popup.add(stopItem);
          popup.add(exitItem);
+
          /// ... add other items
          // construct a TrayIcon
-         trayIcon = new TrayIcon(image, "Tray Demo", popup);
+         TrayIcon trayIcon = new TrayIcon(image, "Cooldowns", popup);
          // set the TrayIcon properties
-         trayIcon.addActionListener(exitlistener);
+         //trayIcon.addActionListener(exitlistener);
+         trayIcon.setPopupMenu(popup);
          // ...
          // add the tray image
          try {
@@ -92,37 +94,46 @@ public class Main {
              System.err.println(e);
          }
          // ...
-     } else {
-         // disable tray option in your application or
-         // perform other actions
-
      }
+
+     ActionListener drawlistener = new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             Robot robot = null;
+             try {
+                 robot = new Robot();
+             } catch (AWTException awtException) {
+                 awtException.printStackTrace();
+             }
+             Rectangle rectangle1 = new Rectangle(915,1300,305,70);
+             Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
+             Rectangle rectangle3 = new Rectangle(950,1255,250,45);
+
+                 bi = robot.createScreenCapture(rectangle1);
+                 bi2 = robot.createScreenCapture(rectangle2);
+                 bi3 = robot.createScreenCapture(rectangle3);
+
+                 w.setAlwaysOnTop(true);
+                 w.setBounds(w.getGraphicsConfiguration().getBounds());
+                 w.setBackground(new Color(0, true));
+                 w.setVisible(true);
+                 w.setFocusable(false);
+
+         }
+     };
+
+     int delay = 100;
+     Timer timer = new Timer(delay,drawlistener);
+     timer.start();
 
 
      if (IsRunning==true) {
-
-         Robot robot = new Robot();
-         Rectangle rectangle1 = new Rectangle(915,1300,305,70);
-         Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
-         Rectangle rectangle3 = new Rectangle(950,1255,250,45);
-
-         for (; ; ) {
-             bi = robot.createScreenCapture(rectangle1);
-             bi2 = robot.createScreenCapture(rectangle2);
-             bi3 = robot.createScreenCapture(rectangle3);
-
-             w.setAlwaysOnTop(true);
-             w.setBounds(w.getGraphicsConfiguration().getBounds());
-             w.setBackground(new Color(0, true));
-             w.setVisible(true);
-             w.setFocusable(false);
-
-         }
 
      } else {
 
          w.dispose();
          w.setVisible(false);
+         timer.stop();
 
 
      }
