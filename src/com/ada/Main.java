@@ -19,22 +19,20 @@ public class Main {
 
     static boolean IsRunning;
 
- static Window w = new Window(null)
+
+   private static Window w = new Window(null)
         {
         @Override
         public void paint(Graphics g)
             {
                 if (IsRunning) {
-
                     Graphics2D g2 = (Graphics2D) g;
                     float opacity = 0.4f;
                     g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
                     g2.drawImage(bi, 915, 500, this);
                     g2.drawImage(bi2, 1330, 500, this);
                     g2.drawImage(bi3, 950, 455, this);
-
                 }
-
             }
         };
 
@@ -122,50 +120,23 @@ public class Main {
          // ...
      }
 
-     ActionListener drawlistener = new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-             Robot robot = null;
-             try {
-                 robot = new Robot();
-             } catch (AWTException awtException) {
-                 awtException.printStackTrace();
-             }
-             Rectangle rectangle1 = new Rectangle(915,1300,305,70);
-             Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
-             Rectangle rectangle3 = new Rectangle(950,1255,250,45);
-
-                 bi = robot.createScreenCapture(rectangle1);
-                 bi2 = robot.createScreenCapture(rectangle2);
-                 bi3 = robot.createScreenCapture(rectangle3);
-
-                 w.setAlwaysOnTop(true);
-                 w.setBounds(w.getGraphicsConfiguration().getBounds());
-                 w.setBackground(new Color(0, true));
-                 w.setVisible(true);
-                 w.setFocusable(false);
-
-         }
-     };
-
-
-
      ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-     executorService.scheduleAtFixedRate(Main::drawCooldowns, 0, 100, TimeUnit.MILLISECONDS);
+
 /*
      int delay = 100;
      Timer timer = new Timer(delay,drawlistener);
      timer.start();
 */
 
-     if (IsRunning==true) {
+     if (IsRunning) {
+
+         executorService.scheduleAtFixedRate(Main::drawCooldowns, 0, 100, TimeUnit.MILLISECONDS);
 
      } else {
 
+         executorService.shutdown();
          w.dispose();
          w.setVisible(false);
-         //timer.stop();
-
 
      }
  }
