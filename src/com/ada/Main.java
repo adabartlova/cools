@@ -22,6 +22,10 @@ public class Main {
     static BufferedImage bi3;
 
     static boolean IsRunning;
+    static Rectangle rectangle1;
+    static Rectangle rectangle2;
+    static Rectangle rectangle3;
+
 
 
    private static Window w = new Window(null)
@@ -38,31 +42,19 @@ public class Main {
             }
         };
 
-    private static void drawCooldowns() {
 
-        Robot robot = null;
-        try {
-            robot = new Robot();
-        } catch (AWTException awtException) {
-            awtException.printStackTrace();
-        }
-        Rectangle rectangle1 = new Rectangle(915,1300,305,70);
-        Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
-        Rectangle rectangle3 = new Rectangle(950,1255,250,45);
-
-        bi = robot.createScreenCapture(rectangle1);
-        bi2 = robot.createScreenCapture(rectangle2);
-        bi3 = robot.createScreenCapture(rectangle3);
-
-        w.setAlwaysOnTop(true);
-        w.setBounds(w.getGraphicsConfiguration().getBounds());
-        w.setBackground(new Color(0, true));
-        w.setVisible(true);
-        w.setFocusable(false);
-
-    }
 
  public static void main(String[] args) throws AWTException, InterruptedException {
+
+     Robot robot = null;
+     try {
+         robot = new Robot();
+     } catch (AWTException awtException) {
+         awtException.printStackTrace();
+     }
+     Rectangle rectangle1 = new Rectangle(915,1300,305,70);
+     Rectangle rectangle2 = new Rectangle(1330,1300,305,70);
+     Rectangle rectangle3 = new Rectangle(950,1255,250,45);
 
      IsRunning = true;
 
@@ -130,6 +122,8 @@ public class Main {
      timer.start();
 */
 
+
+
          for (;;) {
              //executorService.scheduleAtFixedRate(Main::drawCooldowns, 0, 100, TimeUnit.MILLISECONDS);
              Date date = new Date();
@@ -138,9 +132,21 @@ public class Main {
              float f = Float.parseFloat(dateString);
              //System.out.println(i);
 
-             if ( ((f/100) == Math.round(f/100)) && (IsRunning) ) {
+             if ( ((f/500) == Math.round(f/500)) && (IsRunning) ) {
+
                  //System.out.println(f/100);
-                 drawCooldowns();
+                 //drawCooldowns();
+
+                 bi = robot.createScreenCapture(rectangle1);
+                 bi2 = robot.createScreenCapture(rectangle2);
+                 bi3 = robot.createScreenCapture(rectangle3);
+
+                 w.setAlwaysOnTop(true);
+                 w.setBounds(w.getGraphicsConfiguration().getBounds());
+                 w.setBackground(new Color(0, true));
+                 w.setVisible(true);
+                 w.setFocusable(false);
+
              } else {
              }
          }
