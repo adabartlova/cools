@@ -5,7 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.sql.Time;
 import java.text.AttributedCharacterIterator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,14 +29,12 @@ public class Main {
         @Override
         public void paint(Graphics g)
             {
-                if (IsRunning) {
                     Graphics2D g2 = (Graphics2D) g;
                     float opacity = 0.4f;
                     g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
                     g2.drawImage(bi, 915, 500, this);
                     g2.drawImage(bi2, 1330, 500, this);
                     g2.drawImage(bi3, 950, 455, this);
-                }
             }
         };
 
@@ -120,7 +122,7 @@ public class Main {
          // ...
      }
 
-     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+     //ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
 /*
      int delay = 100;
@@ -128,19 +130,27 @@ public class Main {
      timer.start();
 */
 
-     if (IsRunning) {
+         for (;;) {
+             //executorService.scheduleAtFixedRate(Main::drawCooldowns, 0, 100, TimeUnit.MILLISECONDS);
+             Date date = new Date();
+             DateFormat dateFormat = new SimpleDateFormat("SSS");
+             String dateString = dateFormat.format(date);
+             float f = Float.parseFloat(dateString);
+             //System.out.println(i);
 
-         executorService.scheduleAtFixedRate(Main::drawCooldowns, 0, 100, TimeUnit.MILLISECONDS);
+             if ( ((f/100) == Math.round(f/100)) && (IsRunning) ) {
+                 //System.out.println(f/100);
+                 drawCooldowns();
+             } else {
+             }
+         }
 
-     } else {
 
-         executorService.shutdown();
-         w.dispose();
-         w.setVisible(false);
 
-     }
  }
 
 }
+
+
 
 
